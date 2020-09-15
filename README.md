@@ -3,7 +3,7 @@
 ## Create executable
 
 ```bash
-pyinstaller --onefile --windowed csv-to-edf.py
+pyinstaller --onefile csv-to-edf.py
 ```
 
 ## Test

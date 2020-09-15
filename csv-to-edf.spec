@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['main.py'],
+a = Analysis(['csv-to-edf.py'],
              pathex=['/Users/alexcastillo/Code/samples-to-edf'],
              binaries=[],
              datas=[],
@@ -23,15 +23,11 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='main',
+          name='csv-to-edf',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False )
-app = BUNDLE(exe,
-             name='main.app',
-             icon=None,
-             bundle_identifier=None)
+          console=True )
