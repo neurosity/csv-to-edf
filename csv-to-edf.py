@@ -5,17 +5,20 @@ import argparse
 
 
 def csv_to_edf():
-    default_channel_names = "CP5,F5,C3,CP3,CP6,F6,C4,CP4"
+    default_channel_names = "CP3,C3,F5,PO3,PO4,F6,C4,CP4"
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--csv_path", type=str, default="samples.csv")
-    parser.add_argument("--edf_path", type=str, default="samples.edf")
-    parser.add_argument("--sampling_rate", type=int, default=250)
+    parser.add_argument("--output_path", type=str, default="samples.edf")
+    parser.add_argument("--file_type", type=str, default="edf")
+    parser.add_argument("--sampling_rate", type=int, default=256)
     parser.add_argument("--channel_names", type=str, default=default_channel_names)
 
     args = parser.parse_args()
     csv_path = args.csv_path
-    edf_path = args.edf_path
+    output_path = args.output_path
+    file_types = {"edf": pyedflib.FILETYPE_EDF, "bdf": pyedflib.FILETYPE_BDF}
+    file_type = file_types[args.file_type]
     sampling_rate = args.sampling_rate
     channel_names = args.channel_names.split(",")
 
@@ -46,13 +49,13 @@ def csv_to_edf():
         info["transducer"] = "X"
         return info
 
-    with pyedflib.EdfWriter(edf_path, eeg_data.shape[0], file_type=0) as f:
+    with pyedflib.EdfWriter(output_path, eeg_data.shape[0], file_type=file_type) as f:
         # sets signal header information for every channel in the EEG.
         for i in range(len(signal_labels)):
             f.setSignalHeader(i, signal_info(i))
         f.writeSamples(eeg_data, digital=False)
 
-        print(f"edf file generated at: {edf_path}")
+        print(f"edf file generated at: {output_path}")
 
 
 csv_to_edf()
