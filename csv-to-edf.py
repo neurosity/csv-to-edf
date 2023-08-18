@@ -17,7 +17,12 @@ def csv_to_edf():
     args = parser.parse_args()
     csv_path = args.csv_path
     output_path = args.output_path
-    file_types = {"edf": pyedflib.FILETYPE_EDF, "bdf": pyedflib.FILETYPE_BDF}
+    file_types = {
+        "edf": pyedflib.FILETYPE_EDF,
+        "edf+": pyedflib.FILETYPE_EDFPLUS,
+        "bdf": pyedflib.FILETYPE_BDF,
+        "bdf+": pyedflib.FILETYPE_BDFPLUS
+    }
     file_type = file_types[args.file_type]
     sampling_rate = args.sampling_rate
     channel_names = args.channel_names.split(",")
